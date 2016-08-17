@@ -32,18 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'itemOptions' => ['class' => 'item'],
         'itemView' => function ($model, $key, $index, $widget) {
-            switch ($model['type']) {
-                case \app\models\Music::TYPE:
-                    $type = 'music';
-                    break;
-                case \app\models\Film::TYPE:
-                    $type = 'film';
-                    break;
-                case \app\models\Event::TYPE:
-                    $type = 'event';
-                    break;
-            }
-            return $this->render('_' . $type . '-item', ['item' => $model]);
+            return $this->render('_list', ['item' => $model]);
         },
     ]) ?>
 

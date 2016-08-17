@@ -1,1 +1,0 @@
-Music item - <?= $item['name'] ?>

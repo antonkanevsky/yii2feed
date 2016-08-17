@@ -102,9 +102,46 @@ a.desc:after {
     margin-left: 15px;
 }
 
+.entity-search-form .buttons button{
+    margin-right: 10px;
+}
+
+#entities .summary {
+    margin-bottom: 10px;
+}
+
+.list-view .item .caption h3 {
+    margin-top: 0;
+}
+
 @media (min-width: 992px) {
     .container {
         max-width: 900px;
+    }
+}
+
+@media (max-width: 768px) {
+    .entity-search-form .buttons {
+        margin-left: 0;
+    }
+    .col-items {
+        float: none;
+    }
+    .col-items-info {
+        margin-bottom: 25px;
+    }
+    .col-items-image {
+        min-width: 300px;
+    }
+}
+
+@media (max-width: 368px) {
+    .entity-search-form .buttons button {
+        display: block;
+        margin-bottom: 10px;
+    }
+    .entity-search-form .buttons button:last-child {
+        margin-bottom: 0;
     }
 }
 

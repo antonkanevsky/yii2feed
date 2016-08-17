@@ -11,16 +11,6 @@ use kartik\date\DatePicker;
 /* @var $form yii\bootstrap\ActiveForm */
 ?>
 
-<?php
-$this->registerJs(
-    '$("document").ready(function(){
-            $("#entity-search-pjax").on("pjax:end", function() {debugger
-            $.pjax.reload({container:"#entities"});  //Reload GridView
-        });
-    });'
-);
-?>
-
 <div class="row">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -29,7 +19,7 @@ $this->registerJs(
         <div class="panel-body">
             <div class="entity-search-form">
 
-                <?php Pjax::begin(['id' => 'entity-search-pjax']) ?>
+            <?php Pjax::begin(['id' => 'entity-search-pjax']) ?>
                 <?php $form = ActiveForm::begin([
                     'action' => ['index'],
                     'method' => 'get',
@@ -37,8 +27,8 @@ $this->registerJs(
                     'options' => ['data-pjax' => true],
                     'fieldConfig' => [
                         'horizontalCssClasses' => [
-                            'label' => 'col-sm-2',
-                            'wrapper' => 'col-sm-10',
+                            'label'   => 'col-sm-2 col-md-2',
+                            'wrapper' => 'col-sm-10 col-md-8',
                         ],
                     ],
                 ]); ?>
@@ -50,9 +40,9 @@ $this->registerJs(
                 <?= $form->field($model, 'createdDate')
                     ->widget(DatePicker::classname(), [
                         'pluginOptions' => [
-                            'autoclose' => true,
+                            'autoclose'      => true,
+                            'format'         => 'yyyy-mm-dd',
                             'todayHighlight' => true,
-                            'format'    => 'yyyy-mm-dd'
                         ]
                     ]); ?>
 
@@ -62,9 +52,21 @@ $this->registerJs(
                 </div>
 
                 <?php ActiveForm::end(); ?>
+            <?php Pjax::end(); ?>
 
             </div>
         </div>
     </div>
 
 </div>
+
+<?php
+$script = <<< JS
+    $("document").ready(function(){
+        $("#entity-search-pjax").on("pjax:end", function() {
+            $.pjax.reload({container:"#entities"});
+        });
+    });
+JS;
+$this->registerJs($script);
+?>

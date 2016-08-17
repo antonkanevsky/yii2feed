@@ -1,1 +1,0 @@
-Event Item <?= $item['name'] ?>

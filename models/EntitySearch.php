@@ -64,6 +64,7 @@ class EntitySearch extends Model
                 'artist',
                 'createdDate',
                 'releaseDate',
+                'location' => new Expression('NULL'),
                 'startDate' => new Expression('NULL'),
                 'endDate' => new Expression('NULL'),
             ])
@@ -79,6 +80,7 @@ class EntitySearch extends Model
                 'artist' => new Expression('NULL'),
                 'createdDate',
                 'releaseDate',
+                'location' => new Expression('NULL'),
                 'startDate' => new Expression('NULL'),
                 'endDate' => new Expression('NULL'),
             ])
@@ -94,6 +96,7 @@ class EntitySearch extends Model
                 'artist' => new Expression('NULL'),
                 'createdDate',
                 'releaseDate' => new Expression('NULL'),
+                'location',
                 'startDate',
                 'endDate',
             ])
