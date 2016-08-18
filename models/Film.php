@@ -30,9 +30,9 @@ class Film extends Entity
      */
     public function rules()
     {
-        return [
-            ['releaseDate', 'date'],
-        ];
+        return array_merge(parent::rules(), [
+            ['releaseDate', 'date', 'format' => 'php:Y-m-d'],
+        ]);
     }
 
     /**

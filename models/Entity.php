@@ -2,14 +2,19 @@
 
 namespace app\models;
 
+use yii\base\Exception;
+use yii\db\ActiveRecord;
 use Yii;
 
 /**
- * This is the abstract model class for all entities.
+ * This is the base class for all entities.
  *
  * @property integer $type
+ * @property string $name
+ * @property string $createdDate
+ * @property string $image
  */
-abstract class Entity extends \yii\db\ActiveRecord
+class Entity extends ActiveRecord
 {
     /**
      * Used to determine entity type
@@ -17,6 +22,47 @@ abstract class Entity extends \yii\db\ActiveRecord
      * @property integer
      */
     public $type;
+
+    /**
+     * List of available entities.
+     *
+     * @var boolean $indexed
+     * @return array
+     */
+    public static function getEntityTypes($indexed = false)
+    {
+        $types = [
+            Music::TYPE => 'Music',
+            Film::TYPE  => 'Film',
+            Event::TYPE => 'Event',
+        ];
+
+        return $indexed ? $types : array_keys($types);
+    }
+
+    /**
+     * Return entity object.
+     *
+     * @param integer $type
+     * @return mixed
+     * @throws Exception
+     */
+    public static function newEntityObject($type)
+    {
+        if (empty($type)) {
+            throw new Exception('Missing entity type param');
+        }
+
+        $types = self::getEntityTypes(true);
+
+        if (!in_array($type, array_keys($types))) {
+            throw new Exception('Unknown entity type');
+        }
+
+        $entityClassName = "app\\models\\$types[$type]";
+
+        return new $entityClassName;
+    }
 
     /**
      * @see ActiveRecord::rules()
@@ -32,14 +78,16 @@ abstract class Entity extends \yii\db\ActiveRecord
     }
 
     /**
-     * Проверка на существование файла обложки сущности
+     * Validate filename of entity image
      *
      * @param string $attribute
      * @param $params
      */
     public function validateImagePath($attribute, $params)
     {
-        if (strlen($this->$attribute) && !file_exists($this->$attribute)) {
+        $file = Yii::getAlias('@app/web') . '/img/' . $this->$attribute;
+
+        if (strlen($this->$attribute) && !file_exists($file)) {
             $this->addError($attribute, 'Неверный путь к файлу обложки');
         }
     }

@@ -1,8 +1,8 @@
 <?php
 
+use app\models\Entity;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use app\models\EntitySearch;
 use yii\widgets\Pjax;
 use kartik\date\DatePicker;
 
@@ -35,7 +35,7 @@ use kartik\date\DatePicker;
 
                 <?= $form->field($model, 'type')
                     ->label($model->getAttributeLabel('type'))
-                    ->dropDownList(EntitySearch::getEntityTypes(), ['prompt' => '']) ?>
+                    ->dropDownList(Entity::getEntityTypes(true), ['prompt' => '']) ?>
 
                 <?= $form->field($model, 'createdDate')
                     ->widget(DatePicker::classname(), [

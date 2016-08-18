@@ -30,10 +30,10 @@ class Event extends Entity
      */
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(), [
             ['location', 'string', 'max' => 255],
-            [['startDate', 'endDate'], 'date'],
-        ];
+            [['startDate', 'endDate'], 'date', 'format' => 'php:Y-m-d H:i'],
+        ]);
     }
 
     /**

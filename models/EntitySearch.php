@@ -19,7 +19,7 @@ class EntitySearch extends Model
     public function rules()
     {
         return [
-            ['type', 'in', 'range' => self::getEntityTypes(false)],
+            ['type', 'in', 'range' => Entity::getEntityTypes()],
             ['createdDate', 'date', 'format' => 'php:Y-m-d'],
             ['createdDate', 'default', 'value' => null],
         ];
@@ -97,8 +97,8 @@ class EntitySearch extends Model
                 'createdDate',
                 'releaseDate' => new Expression('NULL'),
                 'location',
-                'startDate',
-                'endDate',
+                'startDate' => new Expression("DATE_FORMAT(`startDate`, '%Y-%m-%d %H:%i')"),
+                'endDate' => new Expression("DATE_FORMAT(`endDate`, '%Y-%m-%d %H:%i')"),
             ])
             ->from(Event::tableName());
 
@@ -134,22 +134,5 @@ class EntitySearch extends Model
         ]);
 
         return $dataProvider;
-    }
-
-    /**
-     * Массив доступных для выбора типов сущностей
-     *
-     * @var boolean $indexed
-     * @return array
-     */
-    public static function getEntityTypes($indexed = true)
-    {
-        $types = [
-            Music::TYPE => 'Музыка',
-            Film::TYPE  => 'Фильм',
-            Event::TYPE => 'Событие',
-        ];
-
-        return $indexed ? $types : array_keys($types);
     }
 }
