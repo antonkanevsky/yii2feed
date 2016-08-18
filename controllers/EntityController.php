@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\EntitySearch;
+use app\models\Entity;
+use yii\db\Expression;
 use yii\web\Controller;
 
 /**
@@ -26,9 +28,20 @@ class EntityController extends Controller
         $searchModel = new EntitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $totalsByEntity = Entity::getTotalEntityCount([
+            'DATE(createdDate)' => new Expression('CURDATE()')
+        ]);
+
+        $totalToday = array_sum($totalsByEntity[0]);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'stat' => [
+                'total' => $dataProvider->getTotalCount(),
+                'totalToday' => $totalToday,
+                'totalTodayByEntity' => $totalsByEntity[0],
+            ]
         ]);
     }
 }

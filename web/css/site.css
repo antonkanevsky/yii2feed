@@ -98,6 +98,24 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
+.entity-index > .page-header {
+    position: relative;
+    border: 1px solid #eee;
+    padding-left: 15px;
+}
+
+.entity-index > .page-header > h1 {
+    display: inline-block;
+}
+
+.entity-index > .page-header > a {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -17px;
+    margin-right: 25px;
+}
+
 .entity-search-form .buttons {
     margin-left: 15px;
 }
@@ -112,6 +130,15 @@ a.desc:after {
 
 .list-view .item .caption h3 {
     margin-top: 0;
+}
+
+#modalStat .modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+td.valign-center {
+    vertical-align: middle !important;
 }
 
 @media (min-width: 992px) {
@@ -135,7 +162,18 @@ a.desc:after {
     }
 }
 
-@media (max-width: 368px) {
+@media (max-width: 484px) {
+    .entity-index > .page-header > h1 {
+        display: block;
+    }
+    .entity-index > .page-header > a {
+        position: inherit;
+        margin-left: -14px;
+        margin-top: -8px;
+    }
+}
+
+@media (max-width: 405px) {
     .entity-search-form .buttons button {
         display: block;
         margin-bottom: 10px;

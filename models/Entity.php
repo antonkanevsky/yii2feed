@@ -4,6 +4,8 @@ namespace app\models;
 
 use yii\base\Exception;
 use yii\db\ActiveRecord;
+use yii\db\Query;
+use yii\db\Expression;
 use Yii;
 
 /**
@@ -62,6 +64,51 @@ class Entity extends ActiveRecord
         $entityClassName = "app\\models\\$types[$type]";
 
         return new $entityClassName;
+    }
+
+    /**
+     * Get total entity count.
+     * @param $where additional condition
+     * @return array
+     */
+    public static function getTotalEntityCount($where)
+    {
+        // select for music entity data
+        $query1 = (new Query())
+            ->select([
+                'musicCount' => new Expression("COUNT(`id`)"),
+            ])
+            ->from(Music::tableName());
+
+        // select for film entity data
+        $query2 = (new Query())
+            ->select([
+                'filmCount' => new Expression("COUNT(`id`)"),
+            ])
+            ->from(Film::tableName());
+
+        // select for event entity data
+        $query3 = (new Query())
+            ->select([
+                'eventCount' => new Expression("COUNT(`id`)"),
+            ])
+            ->from(Event::tableName());
+
+        // result query
+        $query = (new Query())
+            ->from([
+                'musicCount' => $query1,
+                'filmCount' => $query2,
+                'eventCount' => $query3,
+            ]);
+
+        if ($where) {
+            $query1->where($where);
+            $query2->where($where);
+            $query3->where($where);
+        }
+
+        return $query->all();
     }
 
     /**
